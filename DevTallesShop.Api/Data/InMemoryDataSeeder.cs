@@ -9,6 +9,6 @@ public static class InMemoryDataSeeder
   {
     new Product(1,"Mouse",15m,true),
     new Product(2,"Teclado",30m,true),
-    new Product(1,"Monitor",120m,false),
+    new Product(3,"Monitor",120m,false),
   };
 }
