@@ -16,7 +16,6 @@
     <Folder Include="Features/Customers/Endpoints/" />
     <Folder Include="Features/Customers/Models/" />
     <Folder Include="Features/Customers/Services/" />
-    <Folder Include="Features/Products/Endpoints/" />
     <Folder Include="Features/Orders/" />
     <Folder Include="Features/Orders/Endpoints/" />
     <Folder Include="Features/Orders/Models/" />
