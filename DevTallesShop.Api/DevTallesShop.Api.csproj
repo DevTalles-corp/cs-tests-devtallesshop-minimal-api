@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features/Customers/" />
+    <Folder Include="Features/Customers/Endpoints/" />
+    <Folder Include="Features/Customers/Models/" />
+    <Folder Include="Features/Customers/Services/" />
+    <Folder Include="Features/Products/Endpoints/" />
+    <Folder Include="Features/Products/Services/" />
+    <Folder Include="Features/Orders/" />
+    <Folder Include="Features/Orders/Endpoints/" />
+    <Folder Include="Features/Orders/Models/" />
+    <Folder Include="Features/Orders/Services/" />
+  </ItemGroup>
+
+</Project>
