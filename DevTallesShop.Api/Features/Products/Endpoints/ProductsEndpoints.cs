@@ -6,7 +6,7 @@ namespace DevTallesShop.Api.Features.Products.Endpoints;
 
 public static class ProductsEndpoints
 {
-  public static MapProductsEndpoints(this IEndpointRouteBuilder app)
+  public static void MapProductsEndpoints(this IEndpointRouteBuilder app)
   {
     app.MapGet("/products", GetAll);
     app.MapGet("/products/{id:int}", GetProductById);
@@ -40,9 +40,40 @@ public static class ProductsEndpoints
     {
       return Results.BadRequest("El precio debe ser mayor a cero.");
     }
+
     var product = productService.CreateProduct(request.Name, request.Price, request.InStock);
     var response = new ProductResponse(product.Id, product.Name, product.Price, product.InStock);
     return Results.Created($"/products/{product.Id}", response);
   }
+
+  public static IResult Update(int id, UpdateProductRequest request, IProductService productService)
+  {
+    if (string.IsNullOrWhiteSpace(request.Name))
+    {
+      return Results.BadRequest("El nombre del producto es requerido.");
+    }
+    if (request.Price <= 0)
+    {
+      return Results.BadRequest("El precio debe ser mayor a cero.");
+    }
+    var updated = productService.UpdateProduct(id, request.Name, request.Price, request.InStock);
+    if (!updated)
+    {
+      return Results.NotFound();
+    }
+    var product = productService.GetByIdProduct(id);
+    var response = new ProductResponse(product!.Id, product.Name, product.Price, product.InStock);
+    return Results.Ok(response);
+  }
+  public static IResult Delete(int id, IProductService productService)
+  {
+    var deleted = productService.DeleteProduct(id);
+    if (!deleted)
+    {
+      return Results.NotFound();
+    }
+    return Results.NoContent();
+  }
   public record CreateProductRequest(string Name, decimal Price, bool InStock);
+  public record UpdateProductRequest(string Name, decimal Price, bool InStock);
 }

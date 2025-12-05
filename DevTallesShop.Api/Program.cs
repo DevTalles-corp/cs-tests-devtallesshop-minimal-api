@@ -1,3 +1,4 @@
+using DevTallesShop.Api.Features.Products.Endpoints;
 using DevTallesShop.Api.Features.Products.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapGet("/", () => "DevTallesShop API esta corriendo");
+app.MapProductsEndpoints();
 
 app.Run();
 
