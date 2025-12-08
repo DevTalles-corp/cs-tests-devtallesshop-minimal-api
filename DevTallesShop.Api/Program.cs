@@ -1,5 +1,6 @@
 using DevTallesShop.Api.Features.Customers.Endpoints;
 using DevTallesShop.Api.Features.Customers.Services;
+using DevTallesShop.Api.Features.Orders.Services;
 using DevTallesShop.Api.Features.Products.Endpoints;
 using DevTallesShop.Api.Features.Products.Services;
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IProductService, InMemoryProductService>();
 builder.Services.AddSingleton<ICustomerService, InMemoryCustomerService>();
+builder.Services.AddSingleton<IOrderService, InMemoryOrderService>();
 
 var app = builder.Build();
 

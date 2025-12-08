@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="Features/Orders/Endpoints/" />
-    <Folder Include="Features/Orders/Services/" />
   </ItemGroup>
 
 </Project>
