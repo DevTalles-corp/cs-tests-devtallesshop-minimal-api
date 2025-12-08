@@ -1,3 +1,5 @@
+using DevTallesShop.Api.Features.Customers.Endpoints;
+using DevTallesShop.Api.Features.Customers.Services;
 using DevTallesShop.Api.Features.Products.Endpoints;
 using DevTallesShop.Api.Features.Products.Services;
 
@@ -9,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IProductService, InMemoryProductService>();
+builder.Services.AddSingleton<ICustomerService, InMemoryCustomerService>();
 
 var app = builder.Build();
 
@@ -23,6 +26,7 @@ app.UseHttpsRedirection();
 
 app.MapGet("/", () => "DevTallesShop API esta corriendo");
 app.MapProductsEndpoints();
+app.MapCustomerEndpoints();
 
 app.Run();
 

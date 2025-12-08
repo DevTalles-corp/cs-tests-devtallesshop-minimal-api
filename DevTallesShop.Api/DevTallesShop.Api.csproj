@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features/Customers/Endpoints/" />
     <Folder Include="Features/Orders/" />
     <Folder Include="Features/Orders/Endpoints/" />
     <Folder Include="Features/Orders/Models/" />
