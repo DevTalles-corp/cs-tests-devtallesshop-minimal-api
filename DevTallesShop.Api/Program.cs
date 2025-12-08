@@ -1,5 +1,6 @@
 using DevTallesShop.Api.Features.Customers.Endpoints;
 using DevTallesShop.Api.Features.Customers.Services;
+using DevTallesShop.Api.Features.Orders.Endpoints;
 using DevTallesShop.Api.Features.Orders.Services;
 using DevTallesShop.Api.Features.Products.Endpoints;
 using DevTallesShop.Api.Features.Products.Services;
@@ -29,6 +30,7 @@ app.UseHttpsRedirection();
 app.MapGet("/", () => "DevTallesShop API esta corriendo");
 app.MapProductsEndpoints();
 app.MapCustomerEndpoints();
+app.MapOrderEndpoints();
 
 app.Run();
 
