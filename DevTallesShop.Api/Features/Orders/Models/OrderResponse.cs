@@ -10,4 +10,3 @@ public record OrderResponse(
   int Quantity,
   decimal Total
 );
-

@@ -1,5 +1,4 @@
 # DevTallesShop.Api
-
 Minimal API de ejemplo para una tienda en línea. Expone recursos de productos, clientes y órdenes, usando datos en memoria para facilitar el aprendizaje y las pruebas locales.
 
 ## Características principales

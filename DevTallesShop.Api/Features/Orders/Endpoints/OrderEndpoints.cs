@@ -1,4 +1,3 @@
-using System;
 using DevTallesShop.Api.Features.Customers.Services;
 using DevTallesShop.Api.Features.Orders.Models;
 using DevTallesShop.Api.Features.Orders.Services;
