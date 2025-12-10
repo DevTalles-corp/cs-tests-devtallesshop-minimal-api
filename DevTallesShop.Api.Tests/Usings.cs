@@ -1,0 +1,14 @@
+global using DevTallesShop.Api.Features.Customers.Models;
+global using DevTallesShop.Api.Features.Customers.Services;
+global using DevTallesShop.Api.Features.Customers.Endpoints;
+global using DevTallesShop.Api.Features.Orders.Models;
+global using DevTallesShop.Api.Features.Orders.Services;
+global using DevTallesShop.Api.Features.Orders.Endpoints;
+global using DevTallesShop.Api.Features.Products.Models;
+global using DevTallesShop.Api.Features.Products.Services;
+global using DevTallesShop.Api.Features.Products.Endpoints;
+global using FluentAssertions;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using Moq;
+global using Xunit;
