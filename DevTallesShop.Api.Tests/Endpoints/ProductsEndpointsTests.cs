@@ -29,12 +29,28 @@ public class ProductsEndpointsTests
       p.Price.Should().BeGreaterThan(0);
     });
   }
-  [Fact(Skip = "Pendiente de implementación")]
+  [Fact]
   public void GetProductById_ReturnsOKWhithProduct()
-  { }
-  [Fact(Skip = "Pendiente de implementación")]
+  {
+    var product = new Product(1, "Laptop", 120m, true);
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.GetByIdProduct(1)).Returns(product);
+
+    var result = ProductsEndpoints.GetProductById(1, serviceMock.Object);
+    var foundProduct = result.Should().BeOfType<Ok<ProductResponse>>().Subject;
+    foundProduct.StatusCode.Should().Be(StatusCodes.Status200OK);
+  }
+
+  [Fact]
   public void GetProductById_ReturnsNotFound_WhenProductDoesNotExist()
-  { }
+  {
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.GetByIdProduct(It.IsAny<int>())).Returns((Product?)null);
+
+    var result = ProductsEndpoints.GetProductById(45, serviceMock.Object);
+    var foundProduct = result.Should().BeOfType<NotFound>().Subject;
+    foundProduct.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+  }
   [Fact(Skip = "Pendiente de implementación")]
   public void CreateProduct_ReturnsCreatedWithPayload()
   { }
