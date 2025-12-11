@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 
 namespace DevTallesShop.Api.Tests.Endpoints;
 
@@ -48,15 +49,32 @@ public class ProductsEndpointsTests
     serviceMock.Setup(s => s.GetByIdProduct(It.IsAny<int>())).Returns((Product?)null);
 
     var result = ProductsEndpoints.GetProductById(45, serviceMock.Object);
-    var foundProduct = result.Should().BeOfType<NotFound>().Subject;
-    foundProduct.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+    var notFound = result.Should().BeOfType<NotFound>().Subject;
+    notFound.StatusCode.Should().Be(StatusCodes.Status404NotFound);
   }
-  [Fact(Skip = "Pendiente de implementación")]
+  [Fact]
   public void CreateProduct_ReturnsCreatedWithPayload()
-  { }
-  [Fact(Skip = "Pendiente de implementación")]
+  {
+    var request = new CreateProductRequest("Laptop", 1200m, true);
+    var createdProduct = new Product(10, request.Name, request.Price, request.InStock);
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.CreateProduct(request.Name, request.Price, request.InStock)).Returns(createdProduct);
+
+    var result = ProductsEndpoints.Create(request, serviceMock.Object);
+    var created = result.Should().BeOfType<Created<ProductResponse>>().Subject;
+    // Console.WriteLine("===");
+    // Console.WriteLine($"Datos de creación: {JsonSerializer.Serialize(created)}");
+    created.StatusCode.Should().Be(StatusCodes.Status201Created);
+    created.Value.Should().BeEquivalentTo(new ProductResponse(createdProduct.Id, createdProduct.Name, createdProduct.Price, createdProduct.InStock));
+  }
+  [Fact]
   public void CreateProduct_ReturnsBadRequest_WhenPriceIsNegative()
-  { }
+  {
+    var request = new CreateProductRequest("Laptop", -10, true);
+    var serviceMock = new Mock<IProductService>(MockBehavior.Strict);
+    var result = ProductsEndpoints.Create(request, serviceMock.Object);
+    result.Should().BeOfType<BadRequest<string>>().Which.Value.Should().Be("El precio debe ser mayor a cero.");
+  }
   [Fact(Skip = "Pendiente de implementación")]
   public void UpdateProduct_ReturnsOk_WhenUpdateSucceeds()
   { }

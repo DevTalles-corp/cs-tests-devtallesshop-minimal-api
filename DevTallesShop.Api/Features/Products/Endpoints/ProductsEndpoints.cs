@@ -74,6 +74,6 @@ public static class ProductsEndpoints
     }
     return Results.NoContent();
   }
-  public record CreateProductRequest(string Name, decimal Price, bool InStock);
-  public record UpdateProductRequest(string Name, decimal Price, bool InStock);
 }
+public record CreateProductRequest(string Name, decimal Price, bool InStock);
+public record UpdateProductRequest(string Name, decimal Price, bool InStock);
