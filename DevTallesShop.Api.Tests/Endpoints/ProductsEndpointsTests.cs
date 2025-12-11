@@ -94,9 +94,18 @@ public class ProductsEndpointsTests
     okResult.StatusCode.Should().Be(StatusCodes.Status200OK);
     okResult.Value.Should().BeEquivalentTo(new ProductResponse(updatedProduct.Id, updatedProduct.Name, updatedProduct.Price, updatedProduct.InStock));
   }
-  [Fact(Skip = "Pendiente de implementación")]
+  [Fact]
   public void UpdateProduct_ReturnsNotFound_WhenServiceReturnsFalse()
-  { }
+  {
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.UpdateProduct(It.IsAny<int>(), It.IsAny<string>(),
+                                           It.IsAny<decimal>(), It.IsAny<bool>())).Returns(false);
+    var request = new UpdateProductRequest("Mouse", 20m, false);
+    var result = ProductsEndpoints.Update(99, request, serviceMock.Object);
+    var notFound = result.Should().BeOfType<NotFound>().Subject;
+    notFound.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+
+  }
   [Fact(Skip = "Pendiente de implementación")]
   public void DeleteProduct_ReturnsNoContent_WhenDeletionSucceeds()
   { }
