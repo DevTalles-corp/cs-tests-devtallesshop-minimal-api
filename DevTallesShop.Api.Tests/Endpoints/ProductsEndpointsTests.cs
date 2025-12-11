@@ -106,10 +106,22 @@ public class ProductsEndpointsTests
     notFound.StatusCode.Should().Be(StatusCodes.Status404NotFound);
 
   }
-  [Fact(Skip = "Pendiente de implementación")]
+  [Fact]
   public void DeleteProduct_ReturnsNoContent_WhenDeletionSucceeds()
-  { }
-  [Fact(Skip = "Pendiente de implementación")]
+  {
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.DeleteProduct(1)).Returns(true);
+    var result = ProductsEndpoints.Delete(1, serviceMock.Object);
+    var noContent = result.Should().BeOfType<NoContent>().Subject;
+    noContent.StatusCode.Should().Be(StatusCodes.Status204NoContent);
+  }
+  [Fact]
   public void DeleteProduct_ReturnsNotFound_WhenDeletionFails()
-  { }
+  {
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.DeleteProduct(It.IsAny<int>())).Returns(false);
+    var result = ProductsEndpoints.Delete(123, serviceMock.Object);
+    var noFound = result.Should().BeOfType<NotFound>().Subject;
+    noFound.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+  }
 }
