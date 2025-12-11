@@ -75,9 +75,25 @@ public class ProductsEndpointsTests
     var result = ProductsEndpoints.Create(request, serviceMock.Object);
     result.Should().BeOfType<BadRequest<string>>().Which.Value.Should().Be("El precio debe ser mayor a cero.");
   }
-  [Fact(Skip = "Pendiente de implementación")]
+  [Fact]
   public void UpdateProduct_ReturnsOk_WhenUpdateSucceeds()
-  { }
+  {
+    var productId = 1;
+    const string name = "Actualiza producto";
+    const decimal price = 25m;
+    const bool inStock = false;
+    var updatedProduct = new Product(productId, name, price, inStock);
+    var serviceMock = new Mock<IProductService>();
+    serviceMock.Setup(s => s.UpdateProduct(productId, name, price, inStock)).Returns(true);
+    serviceMock.Setup(s => s.GetByIdProduct(productId)).Returns(updatedProduct);
+
+    var request = new UpdateProductRequest(name, price, inStock);
+    var result = ProductsEndpoints.Update(productId, request, serviceMock.Object);
+
+    var okResult = result.Should().BeOfType<Ok<ProductResponse>>().Subject;
+    okResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+    okResult.Value.Should().BeEquivalentTo(new ProductResponse(updatedProduct.Id, updatedProduct.Name, updatedProduct.Price, updatedProduct.InStock));
+  }
   [Fact(Skip = "Pendiente de implementación")]
   public void UpdateProduct_ReturnsNotFound_WhenServiceReturnsFalse()
   { }
