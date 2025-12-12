@@ -1,5 +1,3 @@
-using System;
-
 namespace DevTallesShop.Api.Tests.Endpoints;
 
 public class OrderEndpointsTests
