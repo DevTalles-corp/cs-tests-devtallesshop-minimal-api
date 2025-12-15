@@ -70,12 +70,20 @@ public class ProductIntegrationTests : IAsyncLifetime
     response.StatusCode.Should().Be(HttpStatusCode.NotFound);
   }
 
-  [Fact(DisplayName = "DELETE /products/{id} debe retornar 204 No Content", Skip = "Falta implementación")]
+  [Fact(DisplayName = "DELETE /products/{id} debe retornar 204 No Content")]
   public async Task DeleteProduct_ReturnsNoContent()
   {
+    var productId = 1;
+    var response = await _httpClient.DeleteAsync($"/products/{productId}");
+    response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    response.Content.Headers.ContentLength.Should().Be(0);
   }
-  [Fact(DisplayName = "GET /products retorna headers correctos", Skip = "Falta implementación")]
+  [Fact(DisplayName = "GET /products retorna headers correctos")]
   public async Task GetAllProducts_ReturnsCorrectHeaders()
   {
+    var response = await _httpClient.GetAsync("/products");
+    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    response.Content.Headers.ContentType?.MediaType.Should().Be("application/json");
+    response.Content.Headers.ContentLength.Should().BeGreaterThan(0);
   }
 }
