@@ -46,14 +46,28 @@ public class ProductIntegrationTests : IAsyncLifetime
     content.Should().Contain("inStock");
   }
 
-  [Fact(DisplayName = "PUT /products/{id} debe retornar 200 OK cuando actualiza correctamente", Skip = "Falta implementación")]
+  [Fact(DisplayName = "PUT /products/{id} debe retornar 200 OK cuando actualiza correctamente")]
   public async Task UpdateProduct_ReturnsOkWhenSuccessful()
   {
+    var productId = 1;
+    var updatedProduct = new { name = "Producto actualizado", price = 300m, inStock = false };
+    var response = await _httpClient.PutAsJsonAsync($"/products/{productId}", updatedProduct);
+    var updated = await response.Content.ReadFromJsonAsync<ProductResponse>();
+    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    updated.Should().NotBeNull();
+    updated?.Id.Should().BeGreaterThan(0);
+    updated?.Name.Should().Be(updatedProduct.name);
+    updated?.Price.Should().Be(updatedProduct.price);
+    updated?.InStock.Should().Be(updatedProduct.inStock);
   }
 
-  [Fact(DisplayName = "PUT /products/{id} debe retornar 404 cuando el producto no existe", Skip = "Falta implementación")]
+  [Fact(DisplayName = "PUT /products/{id} debe retornar 404 cuando el producto no existe")]
   public async Task UpdateProduct_ReturnsNotFoundWhenDoesNotExist()
   {
+    var productId = 9999;
+    var updatedProduct = new { name = "Producto no encontrado", price = 300m, inStock = false };
+    var response = await _httpClient.PutAsJsonAsync($"/products/{productId}", updatedProduct);
+    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
   }
 
   [Fact(DisplayName = "DELETE /products/{id} debe retornar 204 No Content", Skip = "Falta implementación")]
