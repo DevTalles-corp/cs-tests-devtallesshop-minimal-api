@@ -1,5 +1,3 @@
-using System;
-
 namespace DevTallesShop.Api.Tests.Integration;
 
 public class OrderIntegrationTests : IAsyncLifetime
